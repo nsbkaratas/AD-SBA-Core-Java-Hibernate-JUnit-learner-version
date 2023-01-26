@@ -1,8 +1,10 @@
 package sba.sms.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -49,8 +51,13 @@ public class Student {
     @ToString.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "student_courses", joinColumns = @JoinColumn(name="student_email"), inverseJoinColumns = @JoinColumn(name="course_id"))
-    List<Course> course = new ArrayList<>();
-
+    Set<Course> courses = new HashSet<>();
+    
+    public void addCourse(Course c) {
+		courses.add(c);
+		c.getStudent().add(this);
+	}
+    
 	@Override
 	public int hashCode() {
 		return Objects.hash(email, name, password);

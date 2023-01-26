@@ -1,9 +1,10 @@
 package sba.sms.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -48,7 +49,7 @@ public class Course {
 	    
 	    @ToString.Exclude
 	    @ManyToMany(mappedBy = "courses", cascade= {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH},fetch = FetchType.EAGER)
-	    List<Student> student= new ArrayList<>();
+	    Set<Student> student= new HashSet<>();
 
 		@Override
 		public int hashCode() {

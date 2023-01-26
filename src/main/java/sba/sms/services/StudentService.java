@@ -71,18 +71,41 @@ public class StudentService implements StudentI {
 
 	@Override
 	public boolean validateStudent(String email, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		Student student = getStudentByEmail(email);
+		boolean res = student.getPassword().equals(password) && student != null;
+			
+			return res;
+		
 	}
 
+	
+	private static final CourseService courseService = new CourseService();
+	
 	@Override
 	public void registerStudentToCourse(String email, int courseId) {
-		
+		Transaction tx = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			tx=session.beginTransaction();
+			Student student = getStudentByEmail(email);
+			student.addCourse(courseService.getCourseById(courseId));
+			session.merge(student);
+			tx.commit();
+	
+			
+		}catch (HibernateException ex) {
+			ex.printStackTrace();
+			tx.rollback();
+		}finally {
+			session.close();
+		}
 		
 	}
 
 	@Override
 	public List<Course> getStudentCourses(String email) {
+		List<Course> studentsCourses = new ArrayList<>();
+		
 		
 		return null;
 	}
