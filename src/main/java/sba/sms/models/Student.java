@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,10 +49,13 @@ public class Student {
     @Column(length = 50,name = "password")
     String password;
     
+    
+    
     @ToString.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "student_courses", joinColumns = @JoinColumn(name="student_email"), inverseJoinColumns = @JoinColumn(name="course_id"))
     Set<Course> courses = new HashSet<>();
+    
     
     public void addCourse(Course c) {
 		courses.add(c);
