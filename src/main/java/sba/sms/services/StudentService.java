@@ -99,7 +99,6 @@ public class StudentService implements StudentI {
 		}		
 			
 		return valid;
-//		return getStudentByEmail(email) != null && getStudentByEmail(email).getPassword().equals(password);
 		
 	}
 
